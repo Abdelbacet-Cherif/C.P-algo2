@@ -1,0 +1,121 @@
+ALGORITHM Prob1Sol1
+
+VAR
+    test: BOOLEAN:=FALSE;
+    sum: INTEGER:=0;
+    n1, n2, i, j : INTEGER;
+    tab1: ARRAY_OF INTEGER[n1];
+    tab2: ARRAY_OF INTEGER[n2];
+BEGIN
+    //sum of the distinct numbers (tab1)
+    FOR i FROM 0 TO (n1-1) DO
+        FOR j FROM 0 TO (n2-1) DO
+             IF (tab1[i]=tab2[j]) THEN
+                test:=TRUE; 
+                break;              
+             END_IF
+        END_FOR
+       IF (test=FALSE) THEN
+            sum := sum + tab1[i];
+         ELSE 
+            test:=FALSE;
+        END_IF  
+    END_FOR
+    //sum of the distinct numbers (tab2)
+    FOR i FROM 0 TO n2-1 DO
+        FOR j FROM 0 TO n1-1 DO
+             IF (tab2[i]=tab1[j]) THEN
+               test:=TRUE;
+               break;   
+             END_IF
+        END_FOR
+       IF (test=FALSE) THEN
+            sum := sum + tab2[i];
+         ELSE 
+            test:=FALSE;
+        END_IF
+    END_FOR
+    Write ("sum");
+END
+
+
+
+ALGORITHM Prob1Sol2
+VAR
+   htab : HASH_TABLE<INTEGER,INTEGER>;
+   sum: INTEGER:=0;
+   n1, n2, i, j : INTEGER;
+   tab1: ARRAY_OF INTEGER[n1];
+   tab2: ARRAY_OF INTEGER[n2];
+BEGIN
+    FOR i FROM 0 TO (n1-1) DO
+        count:= 1;
+        FOR j FROM 0 TO (n2-1) DO
+             IF (tab1[i]=tab2[j]) THEN
+             count:=count+1;
+             END_IF
+        END_FOR     
+        htab.insert(tab1[i],count);
+        IF (htab.get(tab1[i])=1) THEN
+            sum:= sum + tab1[i];
+        END_IF 
+    END_FOR
+    FOR i FROM 0 TO (n2-1) DO
+        count:= 1;
+        FOR j FROM 0 TO (n1-1) DO
+             IF (tab2[i]=tab1[j]) THEN
+             count:=count+1;
+             END_IF
+        END_FOR     
+        htab.insert(tab2[i],count);
+        IF (htab.get(tab2[i])=1) THEN
+            sum:= sum + tab2[i];
+        END_IF  
+    END_FOR
+    Write ("sum");
+END
+
+
+
+ALGORITHM Prob2Sol1
+VAR
+    test: BOOLEAN:=FALSE;
+    sum: INTEGER:=0;
+    n1, n2, i, j : INTEGER;
+    tab1: ARRAY_OF INTEGER[n1];
+    tab2: ARRAY_OF INTEGER[n2];
+BEGIN
+    FOR i FROM 0 TO (n1-1) DO
+        FOR j FROM 0 TO (n2-1) DO
+             IF (tab1[i]=tab2[j]) THEN
+                sum := sum + tab1[i]*2;                 
+             END_IF
+        END_FOR 
+    END_FOR
+    Write ("sum");
+END
+
+
+
+ALGORITHM Prob2Sol2
+VAR
+   htab : HASH_TABLE<INTEGER,INTEGER>;
+   sum: INTEGER:=0;
+   n1, n2, i, j : INTEGER;
+   tab1: ARRAY_OF INTEGER[n1];
+   tab2: ARRAY_OF INTEGER[n2];
+BEGIN
+    FOR i FROM 0 TO (n1-1) DO
+        count:=1;
+        FOR j FROM 0 TO (n2-1) DO
+             IF (tab1[i]=tab2[j]) THEN
+             count:=count+1;
+             END_IF
+        END_FOR     
+        htab.insert(tab1[i],count);
+        IF (htab.get(tab1[i])=2) THEN
+            sum:= sum + tab1[i]*2;
+        END_IF 
+    END_FOR
+    Write  ("sum");
+END
